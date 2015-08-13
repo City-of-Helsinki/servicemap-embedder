@@ -1,4 +1,5 @@
 URI = require 'URIjs'
+_ = require 'underscore'
 data = require 'lib/config'
 
 explode = (url) ->
@@ -28,9 +29,20 @@ transform = (url, {language: lang, query: query}) ->
         uri.search joinQueries(query)
     uri.toString()
 
+verify = (url) ->
+    console.log url
+    if url == 'http://dev.hel.fi/~tituomin/test.html'
+        return url
+    host = URI(url).hostname()
+    _.each data.SUBDOMAIN, (subdomain) =>
+        if host == "#{subdomain}.#{data.DOMAIN}"
+            return url
+    false
+
 module.exports =
     explode: explode
     transform: transform
+    verify: verify
 
 joinQueries = (query) ->
     for key, val of query

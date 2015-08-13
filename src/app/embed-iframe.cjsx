@@ -1,11 +1,17 @@
 React = require 'react'
 
 ServiceMapIframe = React.createClass
-  render: ->
-      <div className="commentBox">
-        <p>width: {@props.style.width}</p>
-        <p>min-height: {@props.style['min-height']}</p>
-        <p>frameborder: {@props.frameborder}</p>
-      </div>
+
+    componentDidMount: ->
+        html = React.renderToStaticMarkup @render()
+        html = html.replace /\s/g, "\n  "
+        html = html.replace '</', "\n</"
+        html = html.replace '&amp;', '&'
+        @props.onHtmlRendered html
+    render: ->
+          <iframe
+            src={@props.url}
+            frameBorder={@props.frameBorder}
+            style={@props.style} />
 
 module.exports = ServiceMapIframe

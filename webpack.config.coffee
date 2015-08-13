@@ -14,9 +14,11 @@ module.exports =
   resolve:
     root: [
         __dirname + '/src/',
-        __dirname + '/node_modules']
+        __dirname + '/node_modules',
+        __dirname + '/vendor/styles']
     extensions: [
         "",
+        ".css",
         ".webpack.coffee",
         ".web.js",
         ".js",
@@ -38,7 +40,14 @@ module.exports =
         {
           test: /\.cjsx$/,
           loaders: ['coffee', 'cjsx']
-        }
+        },
+        { test: /\.css$/, loader: "style-loader!css-loader" },
+      #{ test: /\.woff$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.woff$/,   loader: "file-loader" },
+            { test: /\.woff2$/,   loader: "file-loader" },
+      { test: /\.ttf$/,    loader: "file-loader" },
+      { test: /\.eot$/,    loader: "file-loader" },
+      { test: /\.svg$/,    loader: "file-loader" }
     ]
 
   plugins: [

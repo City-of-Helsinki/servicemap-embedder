@@ -1,12 +1,20 @@
 _ = require 'underscore'
 React = require 'react'
+i18n = require 'lib/i18n'
+
+require '../../vendor/stylesheets/hel-bootstrap.min.css'
 
 smurl = require 'lib/url'
 config = require 'lib/config'
-ServiceMapIframe = require 'app/embed-iframe'
+Root = require 'app/root'
 
 div = document.createElement('div')
 document.body.appendChild div
 
-React.render React.createElement(
-    ServiceMapIframe, config.DEFAULT_IFRAME_PROPERTIES), div
+props = {}
+appInit = =>
+    React.render React.createElement(Root, props), div
+
+props.appReset = appInit
+
+i18n.init appInit
