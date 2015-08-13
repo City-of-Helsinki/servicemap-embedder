@@ -4,23 +4,28 @@
   "version": "0.0.1",
   "author": "Timo Tuominen <timo.tuominen@hel.fi>",
   "dependencies": {
-    "bower": "^1.4.1",
-    "chai": "^3.2.0",
-    "coffee-loader": "^0.7.2",
-    "coffee-script": "^1.9.3",
+    "URIjs": "^1.16.0",
     "config": "^1.12.0",
-    "html-webpack-plugin": "^1.6.0",
     "js-yaml": "^3.2.7",
     "json-loader": "^0.5.2",
-    "mocha": "2.2.4",
-    "request": "^2.60.0",
-    "underscore": "^1.8.3",
-    "webpack": "^1.10.1",
-    "webpack-dev-server": "^1.10.1"
+    "react": "^0.13.3",
+    "underscore": "^1.8.3"
   },
   "license": "MIT",
   "scripts": {
-    "pretest": "webpack ./test/*.coffee --output-filename=test.js",
-    "test": "mocha dist/test.js"
+    "pretest": "webpack --entry=test -d --no-colors ./test/*.coffee --output-filename=test.js >/dev/null",
+    "test": "MOCHA_UNFUNK_STYLE=none mocha -R mocha-unfunk-reporter dist/test.js"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "cjsx-loader": "^2.0.1",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.9.3",
+    "glob": "^5.0.14",
+    "html-webpack-plugin": "^1.6.0",
+    "mocha": "2.2.4",
+    "mocha-unfunk-reporter": "^0.4.0",
+    "webpack": "^1.10.1",
+    "webpack-dev-server": "^1.10.1"
   }
 }

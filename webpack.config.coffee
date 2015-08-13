@@ -1,14 +1,29 @@
 HtmlWebpackPlugin = require 'html-webpack-plugin'
 webpack = require 'webpack'
+glob = require("glob")
 module.exports =
   context: __dirname + '/src'
-  entry: './app/main.coffee'
+  entry:
+    app: './app/main.coffee'
+    test: glob.sync(__dirname + "/test/*.coffee")
+
   output:
     path: __dirname + '/dist'
-    filename: 'bundle.js'
+    filename: '[name].js'
+
   resolve:
-    root: [__dirname + '/src/', __dirname + '/node_modules']
-    extensions: ["", ".webpack.coffee", ".web.js", ".js", ".coffee"]
+    root: [
+        __dirname + '/src/',
+        __dirname + '/node_modules']
+    extensions: [
+        "",
+        ".webpack.coffee",
+        ".web.js",
+        ".js",
+        ".coffee",
+        ".cjsx"
+    ]
+
   module:
     devtool: 'source-map',
     loaders: [
@@ -19,14 +34,15 @@ module.exports =
         {
           test: /\.coffee$/
           loader: 'coffee-loader'
+        },
+        {
+          test: /\.cjsx$/,
+          loaders: ['coffee', 'cjsx']
         }
     ]
+
   plugins: [
-    new HtmlWebpackPlugin title: 'React Webpack and Mocha starter'
+    new HtmlWebpackPlugin
+        chunks: ['app']
+        title: 'Servicemap embedding preview'
   ]
-  node:
-    console: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  target: 'node'
