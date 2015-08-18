@@ -13,6 +13,7 @@ module.exports =
 
   resolve:
     root: [
+        __dirname + '/styles',
         __dirname + '/src/',
         __dirname + '/node_modules',
         __dirname + '/vendor/styles']
@@ -29,25 +30,16 @@ module.exports =
   module:
     devtool: 'source-map',
     loaders: [
-        {
-          test: /\.json$/,
-          loader: 'json'
-        },
-        {
-          test: /\.coffee$/
-          loader: 'coffee-loader'
-        },
-        {
-          test: /\.cjsx$/,
-          loaders: ['coffee', 'cjsx']
-        },
-        { test: /\.css$/, loader: "style-loader!css-loader" },
-      #{ test: /\.woff$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff$/,   loader: "file-loader" },
-            { test: /\.woff2$/,   loader: "file-loader" },
-      { test: /\.ttf$/,    loader: "file-loader" },
-      { test: /\.eot$/,    loader: "file-loader" },
-      { test: /\.svg$/,    loader: "file-loader" }
+        { test: /\.json$/,   loader: 'json' },
+        { test: /\.coffee$/, loader: 'coffee-loader' },
+        { test: /\.cjsx$/,   loaders: ['coffee', 'cjsx'] },
+        { test: /\.css$/,    loader: "style-loader!css-loader" },
+        { test: /\.less$/,   loader: "style!css!less" },
+        { test: /\.woff$/,   loader: "file-loader" },
+        { test: /\.woff2$/,  loader: "file-loader" },
+        { test: /\.ttf$/,    loader: "file-loader" },
+        { test: /\.eot$/,    loader: "file-loader" },
+        { test: /\.svg$/,    loader: "file-loader" }
     ]
 
   plugins: [

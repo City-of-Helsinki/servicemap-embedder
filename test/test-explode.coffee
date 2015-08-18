@@ -62,3 +62,6 @@ describe 'Exploding an URI', ->
         result = smurl.explode url
         expect(result.resource).to.equal 'address'
         expect(result.id).to.deep.equal ['helsinki', 'mannerheimintie', '5']
+        url = 'http://servicemap.hel.fi/unit?service=1'
+        result = smurl.explode url
+        expect(result.id).to.equal null

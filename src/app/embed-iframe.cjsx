@@ -1,17 +1,11 @@
 React = require 'react'
+URI = require 'URIjs'
+_ = require 'underscore'
+
+require 'main.less'
 
 ServiceMapIframe = React.createClass
-
-    componentDidMount: ->
-        html = React.renderToStaticMarkup @render()
-        html = html.replace /\s/g, "\n  "
-        html = html.replace '</', "\n</"
-        html = html.replace '&amp;', '&'
-        @props.onHtmlRendered html
     render: ->
-          <iframe
-            src={@props.url}
-            frameBorder={@props.frameBorder}
-            style={@props.style} />
+        <div dangerouslySetInnerHTML={@props.html} />
 
 module.exports = ServiceMapIframe

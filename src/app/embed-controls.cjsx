@@ -1,22 +1,89 @@
-React = require 'react'
+React = require 'react/addons'
 RB = require 'react-bootstrap'
+_ = require 'underscore'
+{t: t} = require 'lib/i18n'
+config = require 'lib/config'
+ControlPanel = require 'app/control-panel'
+update = React.addons.update
+cx = require 'classnames'
 
 ServiceMapEmbedControls = React.createClass
+    getInitialState: ->
+        bbox: null
+        level: null
+        language: null
+    signalInterest: (key, val) ->
+        ret = {}
+        ret[key] = val
+        @setState ret
+    forgetInterests: ->
+        @replaceState @getInitialState()
+    changeHandler: (key, val) ->
+        => @props.onChange key, val
+    renderLanguages: (checked) ->
+            <RB.Row>
+                <RB.Col md={6}>
+                    <p className={@helpClassName 'language', true}>
+                        {t 'parameters.language', @state.language or @props.language, 'help'}
+                    </p>
+                </RB.Col>
+                <RB.Col md={6}>
+                  {  _.map config.LANGUAGES, (name, id) =>
+                       <WrappedInput
+                         className={@textClass 'language', id}
+                         onMouseOver={=> @signalInterest('language', id)}
+                         onMouseLeave={@forgetInterests}
+                         wrappedComponent={RB.Input}
+
+                         checked={id==checked}
+                         type='radio'
+                         name='language'
+                         onChange= {@changeHandler('language', id)}
+                         label={t 'parameters.language', id, 'label'}
+                         key={id} />
+                  }
+                </RB.Col>
+            </RB.Row>
+    renderLevels: ->
+        <RB.Panel>
+        <RB.Row><RB.Col md={12}><h3 className={@helpClassName 'level'}>{t 'title.level'}</h3></RB.Col></RB.Row>
+        {
+            _.map ['all', 'common', 'none'], (level) =>
+                <RB.Input type='radio' defaultChecked={@props.level == level}
+                    onChange={@changeHandler('level', level)}
+                    key={level}
+                    name='level' label={t 'parameters.level', level, 'label'} />
+        }
+        </RB.Panel>
+    textClass: (key, val) ->
+        if @props[key] == val and (@state[key] == val or @state[key] == null)
+             "text-primary"
+        else if @state[key] == val
+            "text-success"
+        else
+            ""
+    hasTransientFocus: (key) ->
+        @state[key] != null and @props[key] != @state[key]
+    helpClassName: (key, help) ->
+        cx 'parameter-help': help, 'text-success': @hasTransientFocus(key), 'text-primary': !@hasTransientFocus(key)
     render: ->
         <form>
-            <RB.Panel>
-                <RB.Input
-                  type='radio'
-                  name='bbox'
-                  label="Use pre-set coordinates"
-                  help='Uses the bounds that the map had when clicking on the "embed" link.'></RB.Input>
-                <RB.Input type='radio' name='bbox' label="Use automatically bounded view"></RB.Input>
-            </RB.Panel>
-            <RB.Panel>
-            <RB.Input type='radio' name='level' label='Show all units' />
-            <RB.Input type='radio' name='level' label='Show popular public services' />
-            <RB.Input type='radio' name='level' label='Do not show any units' />
-            </RB.Panel>
+            <ControlPanel
+              keyName='language'
+              values={config.LANGUAGES}
+              selectedValue={@props.language}
+              onChange={@props.onChange} />
+            <ControlPanel
+              keyName='bbox'
+              values={[true, false]}
+              selectedValue={@props.bbox}
+              onChange={@props.onChange}/>
+            {if @props.resource != 'unit'
+                <ControlPanel
+                  keyName='level'
+                  values={['all', 'common', 'none']}
+                  selectedValue={@props.level}
+                  onChange={@props.onChange}/> }
         </form>
 
 module.exports = ServiceMapEmbedControls
