@@ -29,7 +29,7 @@ Root = React.createClass
             prevParameters = prevState.parameters
             parameters = switch key
                 when 'bbox'
-                    bbox = if value then props.initialBbox else null
+                    bbox = if value == true then props.initialBbox else null
                     update prevParameters, {query: {bbox: {$set: bbox}}}
                 when 'level'
                     update prevParameters, {query: {level: {$set: value}}}
@@ -91,18 +91,27 @@ Root = React.createClass
             <RB.Panel bsStyle='success'>
                 <RB.Panel>
                   <h3>Osoite</h3>
-                  <input type="text" style={width: '100%'} readOnly ref="url" onClick={@selectText} className='parameter-help' value={@embedUrl @state.url} />
+                  <input
+                      readOnly
+                      type="text"
+                      style={width: '100%'}
+                      ref="url"
+                      onClick={@selectText}
+                      className='parameter-help'
+                      value={@embedUrl @state.url} />
                 </RB.Panel>
                 <ServiceMapEmbedControls
-                  language = {@state.parameters.language}
-                  resource = {@getResource()}
-                  bbox = {'bbox' of @state.parameters.query}
-                  level = {@state.parameters.query.level or 'none'}
-                  parameters = {@state.parameters}
-                  onChange = {@receiveAdjustments} />
-                <pre>{@iframeHtml(@state.url, @state.iframeConfig.style).__html}</pre>
+                    language = {@state.parameters.language}
+                    resource = {@getResource()}
+                    bbox = {'bbox' of @state.parameters.query}
+                    level = {@state.parameters.query.level or 'none'}
+                    parameters = {@state.parameters}
+                    onChange = {@receiveAdjustments} />
+                <pre>
+                    {@iframeHtml(@state.url, @state.iframeConfig.style).__html}
+                </pre>
             </RB.Panel>
-
-        </div></div>
+          </div>
+        </div>
 
 module.exports = Root

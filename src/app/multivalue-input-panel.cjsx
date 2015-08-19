@@ -15,6 +15,8 @@ MultiValueInputPanel = React.createClass
         @replaceState @getInitialState()
     value: ->
         @state.value
+    activeValue: ->
+        if @value()? then @value() else @props.selectedValue
     changeHandler: (value) ->
         => @props.onChange @props.keyName, value
     hasTransientFocus: ->
@@ -29,34 +31,37 @@ MultiValueInputPanel = React.createClass
         else
             ""
     render: ->
-            <RB.Panel>
-                <RB.Row>
-                    <RB.Col md={12}>
-                        <h3 className={@helpClassName false}>{t 'title', @props.keyName}</h3>
-                    </RB.Col>
-                </RB.Row>
-                <RB.Row>
-                  <RB.Col md={6}>
-                      <p className={@helpClassName true}>
-                        {t 'parameters', @props.keyName, (if @value()? then @value() else @props.selectedValue), 'help'}
-                      </p>
-                  </RB.Col>
-                  <RB.Col md={6}>
-                    { _.map @props.values, (value) =>
-                        <div onMouseOver={=> @signalInterest value}
-                             onMouseLeave={@forgetInterests}
-                             className={@textClassName value}
-                             key={value}>
+        <RB.Panel>
+            <RB.Row>
+                <RB.Col md={12}>
+                    <h3 className={@helpClassName false}>
+                        {t 'title', @props.keyName}
+                    </h3>
+                </RB.Col>
+            </RB.Row>
+            <RB.Row>
+              <RB.Col md={6}>
+                  <p className={@helpClassName true}>
+                    {t 'parameters', @props.keyName, @activeValue(), 'help'}
+                  </p>
+              </RB.Col>
+              <RB.Col md={6}>
+                { _.map @props.values, (value) =>
+
+                    <div onMouseOver={=> @signalInterest value}
+                         onMouseLeave={@forgetInterests}
+                         className={@textClassName value}
+                         key={value}>
                         <RB.Input
-                          type={@props.inputType}
-                          name={@props.keyName}
-                          label={t 'parameters', @props.keyName, value, 'label'}
-                          checked={@props.selectedValue == value}
-                          onChange={@changeHandler value} />
-                        </div>
-                    }
-                  </RB.Col>
-                </RB.Row>
-            </RB.Panel>
+                            type={@props.inputType}
+                            name={@props.keyName}
+                            label={t 'parameters', @props.keyName, value, 'label'}
+                            checked={@props.selectedValue == value}
+                            onChange={@changeHandler value} />
+                    </div>
+                }
+              </RB.Col>
+            </RB.Row>
+        </RB.Panel>
 
 module.exports = MultiValueInputPanel
