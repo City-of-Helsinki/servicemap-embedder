@@ -17,17 +17,20 @@ ServiceMapEmbedControls = React.createClass
               values={_.keys config.LANGUAGES}
               selectedValue={@props.language}
               onChange={@props.onChange} />
+
             <MultiValueInputPanel
               keyName='bbox'
               values={[true, false]}
               selectedValue={@props.bbox}
               onChange={@props.onChange}/>
+
             {if @props.resource != 'unit'
                 <MultiValueInputPanel
                   keyName='level'
                   values={['all', 'common', 'none']}
                   selectedValue={@props.level}
-                  onChange={@props.onChange}/> }
+                  onChange={@props.onChange}/>
+            }
         </form>
 
 module.exports = ServiceMapEmbedControls
