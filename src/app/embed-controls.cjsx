@@ -3,7 +3,7 @@ RB = require 'react-bootstrap'
 _ = require 'underscore'
 {t: t} = require 'lib/i18n'
 config = require 'lib/config'
-MultiValueInputPanel = require 'app/control-panel'
+MultiValueInputPanel = require 'app/multivalue-input-panel'
 update = React.addons.update
 cx = require 'classnames'
 
