@@ -14,7 +14,10 @@ explode = (url) ->
     query = uri.search true
 
     unless language
-        throw new ReferenceError "Unknown subdomain in #{uri.host()}"
+        if uri.hostname() == 'localhost'
+            language = 'fi'
+        else
+            throw new ReferenceError "Unknown subdomain in #{uri.host()}"
     if resource == ""
         resource = null
     if id.length < 1
@@ -38,6 +41,8 @@ transform = (url, {language: lang, query: query}) ->
 verify = (url) ->
     uri = URI url
     host = uri.hostname()
+    if host == 'localhost'
+        return uri.toString()
     result = false
     _.each data.SUBDOMAIN, (subdomain) =>
         if host == "#{subdomain}.#{data.DOMAIN}"

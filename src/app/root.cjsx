@@ -22,10 +22,23 @@ Root = React.createClass
         url: @props.url
         parameters: @props.parameters
         iframeConfig: config.DEFAULT_IFRAME_PROPERTIES
+        customWidth: config.DEFAULT_CUSTOM_WIDTH
         iframeSource: null
 
     receiveAdjustments: (key, value) ->
         @setState (prevState, props) =>
+            if key == 'width'
+                if value == 'full'
+                    width = '100%'
+                    oldWidth = prevState.iframeConfig.style.width
+                    if oldWidth != width
+                        customWidth = oldWidth
+                    else
+                        customWidth = null
+                else
+                    width = prevState.customWidth or config.DEFAULT_CUSTOM_WIDTH
+                    customWidth = width
+                return update prevState, {iframeConfig: {style: {width: {$set: width}}}, customWidth: {$set: customWidth}}
             prevParameters = prevState.parameters
             parameters = switch key
                 when 'bbox'
@@ -69,6 +82,17 @@ Root = React.createClass
     selectText: ->
         React.findDOMNode(@refs.url).select()
 
+    getCustomDimension: (key) ->
+        if key == 'width'
+            return @state.customWidth
+        @state.iframeConfig.style[key]
+    setCustomDimension: (key, value) ->
+        @setState (state) =>
+            switch key
+                when 'width'
+                    update state, {iframeConfig: {style: {width: {$set: value}}}}
+                when 'minHeight'
+                    update state, {iframeConfig: {style: {minHeight: {$set: value}}}}
     render: ->
         if not @state.url
             return false
@@ -105,6 +129,9 @@ Root = React.createClass
                     resource = {@getResource()}
                     bbox = {'bbox' of @state.parameters.query}
                     level = {@state.parameters.query.level or 'none'}
+                    width = {if @state.iframeConfig.style.width =='100%' then 'full' else 'custom'}
+                    getCustomDimension = {@getCustomDimension}
+                    setCustomDimension = {@setCustomDimension}
                     parameters = {@state.parameters}
                     onChange = {@receiveAdjustments} />
                 <pre>

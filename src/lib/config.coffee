@@ -16,3 +16,4 @@ define (require) ->
             width: '100%'
             minHeight: '400px'
         frameBorder: 0
+    DEFAULT_CUSTOM_WIDTH: '400px'

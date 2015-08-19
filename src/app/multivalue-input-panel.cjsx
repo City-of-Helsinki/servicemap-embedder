@@ -31,7 +31,7 @@ MultiValueInputPanel = React.createClass
         else
             ""
     render: ->
-        <RB.Panel>
+        <div>
             <RB.Row>
                 <RB.Col md={12}>
                     <h3 className={@helpClassName false}>
@@ -62,6 +62,6 @@ MultiValueInputPanel = React.createClass
                 }
               </RB.Col>
             </RB.Row>
-        </RB.Panel>
+        </div>
 
 module.exports = MultiValueInputPanel
