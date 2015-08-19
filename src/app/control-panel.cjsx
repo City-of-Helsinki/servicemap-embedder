@@ -4,42 +4,36 @@ cx = require 'classnames'
 {t: t} = require 'lib/i18n'
 _ = require 'underscore'
 
-ControlPanel = React.createClass
+MultiValueInputPanel = React.createClass
     getInitialState: ->
         value: null
     signalInterest: (val) ->
         @setState value: val
+    getDefaultProps: ->
+        inputType: 'radio'
     forgetInterests: ->
         @replaceState @getInitialState()
     value: ->
         @state.value
-    textClass: (val) ->
-        if @props.selectedValue == val and (@value() == val or @value() == null)
-             "text-primary"
-        else if @value() == val
-            "text-success"
-        else
-            ""
     changeHandler: (value) ->
         => @props.onChange @props.keyName, value
     hasTransientFocus: ->
         @value() != null and @props.selectedValue != @value()
     helpClassName: (help) ->
         cx 'parameter-help': help, 'text-success': @hasTransientFocus(), 'text-primary': !@hasTransientFocus()
+    textClassName: (val) ->
+        if @props.selectedValue == val and (@value() == val or @value() == null)
+             "text-primary"
+        else if @value() == val
+            "text-success"
+        else
+            ""
     render: ->
-            valueType = if @props.values instanceof Array
-                'array'
-            else if @props.values instanceof Object
-                'object'
-            else
-                null
-            unless valueType
-                return null
-            getValue = (value, key) =>
-                if valueType == 'array' then value else key
             <RB.Panel>
                 <RB.Row>
-                    <RB.Col md={12}><h3 className={@helpClassName false}>{t 'title', @props.keyName}</h3></RB.Col>
+                    <RB.Col md={12}>
+                        <h3 className={@helpClassName false}>{t 'title', @props.keyName}</h3>
+                    </RB.Col>
                 </RB.Row>
                 <RB.Row>
                   <RB.Col md={6}>
@@ -48,21 +42,21 @@ ControlPanel = React.createClass
                       </p>
                   </RB.Col>
                   <RB.Col md={6}>
-                    { _.map @props.values, (value, key) =>
-                        <div onMouseOver={=> @signalInterest getValue(value, key)}
+                    { _.map @props.values, (value) =>
+                        <div onMouseOver={=> @signalInterest value}
                              onMouseLeave={@forgetInterests}
-                             className={@textClass value}
+                             className={@textClassName value}
                              key={value}>
                         <RB.Input
-                          type='radio'
+                          type={@props.inputType}
                           name={@props.keyName}
-                          label={t 'parameters', @props.keyName, getValue(value, key), 'label'}
-                          checked={@props.selectedValue == getValue(value, key)}
-                          onChange={@changeHandler getValue(value, key)} />
+                          label={t 'parameters', @props.keyName, value, 'label'}
+                          checked={@props.selectedValue == value}
+                          onChange={@changeHandler value} />
                         </div>
                     }
                   </RB.Col>
                 </RB.Row>
             </RB.Panel>
 
-module.exports = ControlPanel
+module.exports = MultiValueInputPanel

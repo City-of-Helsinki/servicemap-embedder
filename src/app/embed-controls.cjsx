@@ -3,7 +3,7 @@ RB = require 'react-bootstrap'
 _ = require 'underscore'
 {t: t} = require 'lib/i18n'
 config = require 'lib/config'
-ControlPanel = require 'app/control-panel'
+MultiValueInputPanel = require 'app/control-panel'
 update = React.addons.update
 cx = require 'classnames'
 
@@ -68,18 +68,18 @@ ServiceMapEmbedControls = React.createClass
         cx 'parameter-help': help, 'text-success': @hasTransientFocus(key), 'text-primary': !@hasTransientFocus(key)
     render: ->
         <form>
-            <ControlPanel
+            <MultiValueInputPanel
               keyName='language'
-              values={config.LANGUAGES}
+              values={_.keys config.LANGUAGES}
               selectedValue={@props.language}
               onChange={@props.onChange} />
-            <ControlPanel
+            <MultiValueInputPanel
               keyName='bbox'
               values={[true, false]}
               selectedValue={@props.bbox}
               onChange={@props.onChange}/>
             {if @props.resource != 'unit'
-                <ControlPanel
+                <MultiValueInputPanel
                   keyName='level'
                   values={['all', 'common', 'none']}
                   selectedValue={@props.level}
