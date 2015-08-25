@@ -30,15 +30,9 @@ Root = React.createClass
             if key == 'width'
                 if value == 'full'
                     width = '100%'
-                    oldWidth = prevState.iframeConfig.style.width
-                    if oldWidth != width
-                        customWidth = oldWidth
-                    else
-                        customWidth = null
                 else
-                    width = prevState.customWidth or config.DEFAULT_CUSTOM_WIDTH
-                    customWidth = width
-                return update prevState, {iframeConfig: {style: {width: {$set: width}}}, customWidth: {$set: customWidth}}
+                    width = prevState.customWidth
+                return update prevState, {iframeConfig: {style: {width: {$set: width}}}}
             prevParameters = prevState.parameters
             parameters = switch key
                 when 'bbox'
@@ -48,6 +42,8 @@ Root = React.createClass
                     update prevParameters, {query: {level: {$set: value}}}
                 when 'language'
                     update prevParameters, {language: {$set: value}}
+                when 'map'
+                    update prevParameters, {query: {map: {$set: value}}}
             url: smurl.transform prevState.url, parameters
             parameters: parameters
 
@@ -90,7 +86,7 @@ Root = React.createClass
         @setState (state) =>
             switch key
                 when 'width'
-                    update state, {iframeConfig: {style: {width: {$set: value}}}}
+                    update state, {iframeConfig: {style: {width: {$set: value}}}, customWidth: {$set: value}}
                 when 'minHeight'
                     update state, {iframeConfig: {style: {minHeight: {$set: value}}}}
     render: ->
@@ -107,10 +103,6 @@ Root = React.createClass
 
             <ServiceMapIframe html={@iframeHtml(@state.url, @state.iframeConfig.style)}/>
 
-            <EmbedHeader
-              resource={@getResource()}
-              resourceId={@state.parameters.id}
-              query={@state.parameters.query} />
 
             <RB.Panel bsStyle='success'>
                 <RB.Panel>
@@ -121,14 +113,18 @@ Root = React.createClass
                       style={width: '100%'}
                       ref="url"
                       onClick={@selectText}
-                      className='parameter-help'
                       value={@embedUrl @state.url} />
+                <EmbedHeader
+                  resource={@getResource()}
+                  resourceId={@state.parameters.id}
+                  query={@state.parameters.query} />
                 </RB.Panel>
                 <ServiceMapEmbedControls
                     language = {@state.parameters.language}
                     resource = {@getResource()}
                     bbox = {'bbox' of @state.parameters.query}
                     level = {@state.parameters.query.level or 'none'}
+                    map = {@state.parameters.query.map or 'servicemap'}
                     width = {if @state.iframeConfig.style.width =='100%' then 'full' else 'custom'}
                     getCustomDimension = {@getCustomDimension}
                     setCustomDimension = {@setCustomDimension}

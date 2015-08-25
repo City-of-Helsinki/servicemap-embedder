@@ -11,6 +11,7 @@ define (require) ->
         en: 'english'
         sv: 'svenska'
         fi: 'suomi'
+    BACKGROUND_MAPS: ['servicemap', 'ortographic', 'accessible_map']
     DEFAULT_IFRAME_PROPERTIES:
         style:
             width: '100%'

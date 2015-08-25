@@ -2,6 +2,7 @@ _ = require 'underscore'
 React = require 'react'
 i18n = require 'lib/i18n'
 smurl = require 'lib/url'
+URI = require 'URIjs'
 
 require '../../vendor/stylesheets/hel-bootstrap.min.css'
 

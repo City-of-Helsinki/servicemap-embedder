@@ -32,20 +32,15 @@ MultiValueInputPanel = React.createClass
             ""
     render: ->
         <div>
-            <RB.Row>
-                <RB.Col md={12}>
+              <RB.Col md={6}>
                     <h3 className={@helpClassName false}>
                         {t 'title', @props.keyName}
                     </h3>
-                </RB.Col>
-            </RB.Row>
-            <RB.Row>
-              <RB.Col md={6}>
                   <p className={@helpClassName true}>
                     {t 'parameters', @props.keyName, @activeValue(), 'help'}
                   </p>
               </RB.Col>
-              <RB.Col md={6}>
+              <RB.Col md={6} className='multivalue-group-inputs'>
                 { _.map @props.values, (value) =>
 
                     <div onMouseOver={=> @signalInterest value}
@@ -61,7 +56,9 @@ MultiValueInputPanel = React.createClass
                     </div>
                 }
               </RB.Col>
-            </RB.Row>
+                {if @props.injectContents
+                    @props.injectContents
+                }
         </div>
 
 module.exports = MultiValueInputPanel

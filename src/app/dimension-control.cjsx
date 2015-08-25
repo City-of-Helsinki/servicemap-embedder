@@ -11,13 +11,15 @@ DimensionControl = React.createClass
             visibility: 'hidden'
         else
             {}
+    getDefaultProps: ->
+        noOffset: false
     hasPendingModifications: ->
         @state.value != @props.getValue @props.keyName
     getButtonStyle: ->
         if @hasPendingModifications() then null else 'success'
     render: ->
-        <RB.Row style={@getStyle @props.hidden}>
-            <RB.Col md={4} mdOffset={6} >
+        <div style={@getStyle @props.hidden}>
+            <RB.Col md={4} mdOffset={unless @props.noOffset then 6} >
                 <RB.Input
                     type='text'
                     ref='input'
@@ -32,6 +34,6 @@ DimensionControl = React.createClass
                         Tallenna
                 </RB.Button>
             </RB.Col>
-        </RB.Row>
+        </div>
 
 module.exports = DimensionControl
