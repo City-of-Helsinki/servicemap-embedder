@@ -19,6 +19,7 @@ resources =
                bbox: 'Kartan rajaus'
                minHeight: 'Upotuksen korkeus'
                width: 'Upotuksen leveys'
+               height: 'Upotuksen korkeus'
                map: 'Taustakartta'
            parameters:
                language:
@@ -55,6 +56,13 @@ resources =
                    custom:
                        label: 'Valittu leveys'
                        help: 'Upotuksen leveys on määritelty pikseleissä.'
+                height:
+                    ratio:
+                        label: 'Suhteellinen korkeus'
+                        help: 'Upotuksen korkeuden suhde leveyteen on määritelty'
+                    fixed:
+                        label: 'Absoluuttinen korkeus'
+                        help: 'Upotuksen korkeus on määritelty pikseleissä'
                 map:
                     servicemap:
                         label: 'Palvelukartta'
