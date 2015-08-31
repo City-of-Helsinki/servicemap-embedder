@@ -52,7 +52,7 @@ resources =
                width:
                    full:
                        label: 'Automaattinen leveys'
-                       help: 'Upotus täyttää leveyssuunnassa sen sivun elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu 500 pikseliä leveään katkoviivalla merkittyyn elementtiin.'
+                       help: 'Upotus täyttää leveyssuunnassa elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu katkoviivalla merkittyyn vakiolevyiseen elementtiin.'
                    custom:
                        label: 'Valittu leveys'
                        help: 'Upotuksen leveys on määritelty pikseleissä.'
