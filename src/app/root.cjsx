@@ -9,6 +9,7 @@ URI = require 'URIjs'
 {t: t} = require 'lib/i18n'
 _ = require 'underscore'
 i18next = require 'i18next-client'
+cx = require 'classnames'
 
 APP_ROOT = '/'
 
@@ -19,11 +20,14 @@ Root = React.createClass
         i18next.setLng lng, => @props.appReset lng
 
     getInitialState: ->
+        console.log 'here', @props
         url: @props.url
         parameters: @props.parameters
         iframeConfig: config.DEFAULT_IFRAME_PROPERTIES
         customWidth: config.DEFAULT_CUSTOM_WIDTH
-        iframeSource: null
+        heightMode: 'ratio'
+        fixedHeight: config.DEFAULT_CUSTOM_WIDTH
+        ratioHeight: @props.initialRatio
 
     receiveAdjustments: (key, value) ->
         @setState (prevState, props) =>
@@ -33,6 +37,8 @@ Root = React.createClass
                 else
                     width = prevState.customWidth
                 return update prevState, {iframeConfig: {style: {width: {$set: width}}}}
+            if key == 'height'
+                return update prevState, {heightMode: {$set: value}}
             prevParameters = prevState.parameters
             parameters = switch key
                 when 'bbox'
@@ -47,13 +53,22 @@ Root = React.createClass
             url: smurl.transform prevState.url, parameters
             parameters: parameters
 
-    renderStyle: (style) ->
-        "width:#{style.width}; min-height:#{style.minHeight}; border:none;"
+    renderWrapperStyle: (style) ->
+        "position: relative; width:100%; padding-bottom:#{@state.ratioHeight}%;"
     iframeHtml: (url, style) ->
-        __html: """
-            <iframe src="#{@embedUrl url}"
-            style="#{@renderStyle style}"></iframe>"""
-
+        if @state.heightMode == 'fixed'
+            height = @state.fixedHeight
+        if @state.heightMode == 'ratio'
+            if @state.iframeConfig.style.width == '100%'
+                html = """<div style="#{@renderWrapperStyle style}">
+                   <iframe style="position: absolute; top: 0; left: 0; border: none; width: 100%; height: 100%;"
+                   src="#{@embedUrl url}"></iframe></div>"""
+            else
+                height = parseInt(parseInt(@state.customWidth) * (parseInt(@state.ratioHeight) / 100.0))
+        if height?
+            html = """<iframe style="border: none; width: #{@state.iframeConfig.style.width}px; height: #{height}px;"
+                      src="#{@embedUrl url}"></iframe>"""
+        return __html: html
     getResource: ->
         @state.parameters.resource
 
@@ -79,16 +94,17 @@ Root = React.createClass
         React.findDOMNode(@refs.url).select()
 
     getCustomDimension: (key) ->
-        if key == 'width'
-            return @state.customWidth
-        @state.iframeConfig.style[key]
+        return @state[key]
+
     setCustomDimension: (key, value) ->
         @setState (state) =>
             switch key
-                when 'width'
+                when 'customWidth'
                     update state, {iframeConfig: {style: {width: {$set: value}}}, customWidth: {$set: value}}
-                when 'minHeight'
-                    update state, {iframeConfig: {style: {minHeight: {$set: value}}}}
+                when 'ratioHeight'
+                    update state, {ratioHeight: {$set: value}}
+                when 'fixedHeight'
+                    update state, {fixedHeight: {$set: value}}
     render: ->
         if not @state.url
             return false
@@ -101,10 +117,10 @@ Root = React.createClass
 
           <div className='container'>
 
-            <ServiceMapIframe html={@iframeHtml(@state.url, @state.iframeConfig.style)}/>
+            <div className={cx 'iframe-container': true, 'visible-container': @state.iframeConfig.style.width=='100%'}>
+              <ServiceMapIframe html={@iframeHtml(@state.url, @state.iframeConfig.style)}/>
+            </div>
 
-
-            <RB.Panel bsStyle='success'>
                 <RB.Panel>
                   <h3>Osoite</h3>
                   <input
@@ -126,14 +142,15 @@ Root = React.createClass
                     level = {@state.parameters.query.level or 'none'}
                     map = {@state.parameters.query.map or 'servicemap'}
                     width = {if @state.iframeConfig.style.width =='100%' then 'full' else 'custom'}
+                    height = {@state.heightMode}
                     getCustomDimension = {@getCustomDimension}
                     setCustomDimension = {@setCustomDimension}
                     parameters = {@state.parameters}
+                    waitForConfirmation = {@waitForConfirmation}
                     onChange = {@receiveAdjustments} />
                 <pre>
                     {@iframeHtml(@state.url, @state.iframeConfig.style).__html}
                 </pre>
-            </RB.Panel>
           </div>
         </div>
 

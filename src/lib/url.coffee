@@ -44,7 +44,8 @@ transform = (url, {language: lang, query: query}) ->
 verify = (url) ->
     uri = URI url
     host = uri.hostname()
-    if host == 'localhost'
+    if host.match /^localhost/
+        uri.port '9001'
         return uri.toString()
     result = false
     _.each data.SUBDOMAIN, (subdomain) =>

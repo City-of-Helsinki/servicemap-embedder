@@ -2,7 +2,9 @@ React = require 'react'
 RB = require 'react-bootstrap'
 
 DimensionControl = React.createClass
-    handleSave: ->
+    handleChange: (ev) ->
+        @setState value: ev.target.value
+    handleSave: (ev) ->
         @props.handleValue @props.keyName, @state.value
     getInitialState: ->
         value: @props.getValue @props.keyName
@@ -13,8 +15,11 @@ DimensionControl = React.createClass
             {}
     getDefaultProps: ->
         noOffset: false
+    componentWillReceiveProps: (props) ->
+        if props.keyName != @props.keyName
+            @setState value: @props.getValue(props.keyName)
     hasPendingModifications: ->
-        @state.value != @props.getValue @props.keyName
+        @state.value != @getInitialState().value
     getButtonStyle: ->
         if @hasPendingModifications() then null else 'success'
     render: ->
@@ -23,8 +28,9 @@ DimensionControl = React.createClass
                 <RB.Input
                     type='text'
                     ref='input'
-                    value={@state.value}
-                    onChange={(e) => @setState value: e.target.value} />
+                    addonAfter={if @props.keyName in ['customWidth', 'fixedHeight'] then 'px' else '%'}
+                    onChange={@handleChange}
+                    value={@state.value} />
             </RB.Col>
             <RB.Col md={2}>
                 <RB.Button

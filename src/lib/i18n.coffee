@@ -51,10 +51,10 @@ resources =
                width:
                    full:
                        label: 'Automaattinen leveys'
-                       help: 'Upotus täyttää leveyssuunnassa tilan, johon se on sijoitettu.'
+                       help: 'Upotus täyttää leveyssuunnassa sen sivun elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu 500 pikseliä leveään katkoviivalla merkittyyn elementtiin.'
                    custom:
                        label: 'Valittu leveys'
-                       help: 'Upotuksen leveys on määritelty halutuksi.'
+                       help: 'Upotuksen leveys on määritelty pikseleissä.'
                 map:
                     servicemap:
                         label: 'Palvelukartta'

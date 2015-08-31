@@ -39,7 +39,7 @@ ServiceMapEmbedControls = React.createClass
                 <RB.Row>
                     <MultiValueInputPanel
                       keyName='level'
-                      values={['all', 'common', 'none']}
+                      values={['none', 'common', 'all']}
                       selectedValue={@props.level}
                       onChange={@props.onChange} />
                 </RB.Row>
@@ -55,32 +55,36 @@ ServiceMapEmbedControls = React.createClass
                 </RB.Row>
             </RB.Panel>
             <RB.Panel>
-                <RB.Row>
-                    <RB.Col md={6}>
-                        <h3 className='text-primary'>
-                            {t 'title.minHeight'}
-                        </h3>
-                    </RB.Col>
-                <DimensionControl
-                    keyName='minHeight'
-                    handleValue={@props.setCustomDimension}
-                    getValue={@props.getCustomDimension} />
+              <RB.Row>
+                  <MultiValueInputPanel
+                    keyName='width'
+                    values={['full', 'custom']}
+                    selectedValue={@props.width}
+                    onChange={@props.onChange} >
+                        <DimensionControl
+                            hidden={@props.width != 'custom'}
+                            noOffset={true}
+                            keyName={'customWidth'}
+                            handleValue={@props.setCustomDimension}
+                            getValue={@props.getCustomDimension} />
+                  </MultiValueInputPanel>
                 </RB.Row>
                 <hr />
                 <RB.Row>
                 <MultiValueInputPanel
-                  keyName='width'
-                  values={['full', 'custom']}
-                  selectedValue={@props.width}
-                  onChange={@props.onChange}
-                  injectContents={<DimensionControl
-                    hidden={@props.width != 'custom'}
-                    noOffset={true}
-                    keyName='width'
-                    handleValue={@props.setCustomDimension}
-                    getValue={@props.getCustomDimension} />}
-                   />
+                  keyName='height'
+                  values={['ratio', 'fixed']}
+                  selectedValue={@props.height}
+                  onChange={@props.onChange}>
+                    <DimensionControl
+                       noOffset={true}
+                       waitForConfirmation={@props.waitForConfirmation}
+                       keyName={@props.height + 'Height'}
+                       handleValue={@props.setCustomDimension}
+                       getValue={@props.getCustomDimension} />
+                </MultiValueInputPanel>
                 </RB.Row>
+
             </RB.Panel>
         </form>
 

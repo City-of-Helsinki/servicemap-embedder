@@ -15,6 +15,6 @@ define (require) ->
     DEFAULT_IFRAME_PROPERTIES:
         style:
             width: '100%'
-            minHeight: '400px'
+            height: '100%'
         frameBorder: 0
-    DEFAULT_CUSTOM_WIDTH: '400px'
+    DEFAULT_CUSTOM_WIDTH: '400'

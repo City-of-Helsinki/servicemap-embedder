@@ -23,13 +23,15 @@ ADDRESS_URL = "http://localhost:9001/address/helsinki/lontoonkatu/6"
 BBOX_URL = "http://localhost:9001/?bbox=60.201456226,24.8981159927,60.190874505,24.8834907630&level=none"
 #url = smurl.verify SERVICE_URL
 #url = smurl.verify ADDRESS_URL
-url = smurl.verify UNIT_URL
+#url = smurl.verify UNIT_URL
 #url = smurl.verify BBOX_URL
+url = smurl.verify window.location
 parameters = smurl.explode url
 
 props =
     url: url
     initialBbox: parameters.query.bbox
+    initialRatio: if parameters.query.ratio? then parseInt(parameters.query.ratio * 100) else 62
     parameters: parameters
 
 appInit = (lang) =>
@@ -37,9 +39,6 @@ appInit = (lang) =>
     React.render React.createElement(Root, props), div
 
 props.appReset = appInit
-
-silentErrorHandler = => true
-window.onerror=silentErrorHandler
 
 lang = 'fi'
 i18n.init lang, appInit

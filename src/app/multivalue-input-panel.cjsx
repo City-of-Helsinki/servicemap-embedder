@@ -42,7 +42,6 @@ MultiValueInputPanel = React.createClass
               </RB.Col>
               <RB.Col md={6} className='multivalue-group-inputs'>
                 { _.map @props.values, (value) =>
-
                     <div onMouseOver={=> @signalInterest value}
                          onMouseLeave={@forgetInterests}
                          className={@textClassName value}
@@ -56,9 +55,7 @@ MultiValueInputPanel = React.createClass
                     </div>
                 }
               </RB.Col>
-                {if @props.injectContents
-                    @props.injectContents
-                }
+              {@props.children}
         </div>
 
 module.exports = MultiValueInputPanel
