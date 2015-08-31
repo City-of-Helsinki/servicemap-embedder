@@ -66,7 +66,9 @@ Root = React.createClass
             else
                 height = parseInt(parseInt(@state.customWidth) * (parseInt(@state.ratioHeight) / 100.0))
         if height?
-            html = """<iframe style="border: none; width: #{@state.iframeConfig.style.width}px; height: #{height}px;"
+            width = @state.iframeConfig.style.width
+            widthUnit = if width != '100%' then 'px' else ''
+            html = """<iframe style="border: none; width: #{width}#{widthUnit}; height: #{height}px;"
                       src="#{@embedUrl url}"></iframe>"""
         return __html: html
     getResource: ->
