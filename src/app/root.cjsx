@@ -114,7 +114,7 @@ Root = React.createClass
 
           <RB.Navbar inverse brand={t 'page.header'}>
             <p className="lead"></p>
-            {@renderLanguages @props.lang}
+            {#@renderLanguages @props.lang}
           </RB.Navbar>
 
           <div className='container'>
