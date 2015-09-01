@@ -34,7 +34,7 @@ DimensionControl = React.createClass
             </RB.Col>
             <RB.Col md={2}>
                 <RB.Button
-                    bsStyle='success'
+                    bsStyle={if @hasPendingModifications() then 'success'}
                     disabled={!@hasPendingModifications()}
                     onClick={@handleSave}>
                         Tallenna

@@ -10,7 +10,7 @@ module.exports =
   output:
     path: __dirname + '/dist'
     filename: '[name].js'
-    publicPath: '/'
+    publicPath: '/embedder/'
 
   resolve:
     root: [

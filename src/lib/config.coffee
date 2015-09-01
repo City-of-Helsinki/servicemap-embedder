@@ -18,3 +18,4 @@ define (require) ->
             height: '100%'
         frameBorder: 0
     DEFAULT_CUSTOM_WIDTH: '400'
+    BASE_URL: '/embedder'

@@ -34,7 +34,7 @@ ServiceMapEmbedControls = React.createClass
                     </RB.Row>
                 </RB.Panel>
             }
-            {if (@props.resource != 'unit')
+            {if (@props.resource not in ['unit', 'search'])
                 <RB.Panel>
                 <RB.Row>
                     <MultiValueInputPanel

@@ -13,6 +13,7 @@ resources =
                    address: 'katuosoite'
                    division: 'alue tai kaupunginosa'
                    other: 'maantieteellinen rajaus'
+                   search: 'tekstihaku'
            title:
                language: 'Upotuksen kieli'
                level: 'Palvelut'
