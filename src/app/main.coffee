@@ -31,7 +31,7 @@ parameters = smurl.explode url
 props =
     url: url
     initialBbox: parameters.query.bbox
-    initialRatio: if parameters.query.ratio? then parseInt(parameters.query.ratio * 100) else 62
+    initialRatio: if parameters.query.ratio? then parameters.query.ratio else 62
     parameters: parameters
 
 appInit = (lang) =>

@@ -20,7 +20,6 @@ Root = React.createClass
         i18next.setLng lng, => @props.appReset lng
 
     getInitialState: ->
-        console.log 'here', @props
         url: @props.url
         parameters: @props.parameters
         iframeConfig: config.DEFAULT_IFRAME_PROPERTIES
