@@ -22,6 +22,7 @@ resources =
                width: 'Upotuksen leveys'
                height: 'Upotuksen korkeus'
                map: 'Taustakartta'
+               city: 'Kaupunki'
            parameters:
                language:
                    fi:
@@ -74,6 +75,22 @@ resources =
                     accessible_map:
                         label: 'Suurikontrastinen'
                         help: 'Suurikontrastinen kartta'
+                city:
+                    helsinki:
+                        label: 'Helsinki'
+                        help: 'Palvelut on rajattu Helsingin alueelle.'
+                    espoo:
+                        label: 'Espoo'
+                        help: 'Palvelut on rajattu Espoon alueelle.'
+                    vantaa:
+                        label: 'Vantaa'
+                        help: 'Palvelut on rajattu Vantaan alueelle.'
+                    kauniainen:
+                        label: 'Kauniainen'
+                        help: 'Palvelut on rajattu Kauniaisten alueelle.'
+                    all:
+                        label: 'Kaikki'
+                        help: 'Kaikkien kaupunkien palvelut näytetään.'
 
     en:
        translation:
