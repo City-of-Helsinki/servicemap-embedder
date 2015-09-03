@@ -25,7 +25,7 @@ BBOX_URL = "http://localhost:9001/?bbox=60.201456226,24.8981159927,60.190874505,
 #url = smurl.verify ADDRESS_URL
 #url = smurl.verify UNIT_URL
 #url = smurl.verify BBOX_URL
-{url: url, ratio: ratio} = smurl.verify window.location
+{url: url, ratio: ratio} = smurl.verify window.location.href
 parameters = smurl.explode url
 initialRatio = if ratio? then ratio else 62
 
