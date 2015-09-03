@@ -54,15 +54,17 @@ ServiceMapEmbedControls = React.createClass
                   onChange={@props.onChange} />
                 </RB.Row>
             </RB.Panel>
-            <RB.Panel>
-                <RB.Row>
-                <MultiValueInputPanel
-                  keyName='city'
-                  values={['espoo', 'helsinki', 'vantaa', 'kauniainen', 'all']}
-                  selectedValue={@props.city}
-                  onChange={@props.onChange} />
-                </RB.Row>
-            </RB.Panel>
+            { if (@props.resource in ['unit', 'search'])
+                <RB.Panel>
+                    <RB.Row>
+                    <MultiValueInputPanel
+                      keyName='city'
+                      values={['espoo', 'helsinki', 'vantaa', 'kauniainen', 'all']}
+                      selectedValue={@props.city}
+                      onChange={@props.onChange} />
+                    </RB.Row>
+                </RB.Panel>
+            }
             <RB.Panel>
               <RB.Row>
                   <MultiValueInputPanel

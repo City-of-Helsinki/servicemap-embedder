@@ -49,6 +49,8 @@ Root = React.createClass
                     update prevParameters, {language: {$set: value}}
                 when 'map'
                     update prevParameters, {query: {map: {$set: value}}}
+                when 'city'
+                    update prevParameters, {query: {city: {$set: value}}}
             url: smurl.transform prevState.url, parameters
             parameters: parameters
 
