@@ -141,6 +141,7 @@ Root = React.createClass
                     resource = {@getResource()}
                     bbox = {'bbox' of @state.parameters.query}
                     level = {@state.parameters.query.level or 'none'}
+                    city = {@state.parameters.query.city or 'all'}
                     map = {@state.parameters.query.map or 'servicemap'}
                     width = {if @state.iframeConfig.style.width =='100%' then 'full' else 'custom'}
                     height = {@state.heightMode}

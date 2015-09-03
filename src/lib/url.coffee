@@ -39,6 +39,9 @@ transform = (url, {language: lang, query: query}) ->
         if query.map?
             if query.map == 'servicemap'
                 delete query.map
+        if query.city?
+            if query.city == 'all'
+                delete query.city
         uri.search joinQueries(query)
     uri.toString()
 
