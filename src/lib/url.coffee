@@ -45,10 +45,25 @@ transform = (url, {language: lang, query: query}) ->
         uri.search joinQueries(query)
     uri.toString()
 
+IE_FAULTY_URL = /#(.*[\/\?].*)+$/
+
 verify = (url) ->
     uri = URI url
+    # Internet Explorer < 10 emits
+    # faulty URL paths.
+    fragmentSearch = null
+    if url.search(IE_FAULTY_URL) > 0
+        fragment = uri.fragment()
+        fragmentUri = URI fragment
+        fragmentSearch = fragmentUri.search true
+        fragmentUri.search ''
+        pathname = uri.pathname() + fragmentUri.toString()
+        uri.fragment ''
+           .pathname pathname
     host = uri.hostname()
     query = uri.search true
+    if fragmentSearch?
+        query = _.defaults query, fragmentSearch
     ratio = query.ratio
     delete query.ratio
     directory = uri.directory()
