@@ -1,6 +1,18 @@
 HtmlWebpackPlugin = require 'html-webpack-plugin'
 webpack = require 'webpack'
 glob = require("glob")
+TEMPLATE = """
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+    <title>Servicemap embedding preview</title>
+  </head>
+  <body>
+  </body>
+</html>
+"""
 module.exports =
   context: __dirname + '/src'
   entry:
@@ -47,4 +59,6 @@ module.exports =
     new HtmlWebpackPlugin
         chunks: ['app']
         title: 'Servicemap embedding preview'
+        inject: true
+        templateContent: TEMPLATE
   ]
