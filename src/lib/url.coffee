@@ -45,6 +45,17 @@ transform = (url, {language: lang, query: query}) ->
         uri.search joinQueries(query)
     uri.toString()
 
+strip = (url, parameters) ->
+    if parameters.resource?
+        if parameters.query.bbox?
+            delete parameters.query.bbox
+        uri = URI url
+        query = uri.search true
+        if query.bbox?
+            delete query.bbox
+        uri.search query
+    uri.toString()
+
 IE_FAULTY_URL = /#(.*[\/\?].*)+$/
 
 verify = (url) ->
@@ -84,6 +95,7 @@ module.exports =
     explode: explode
     transform: transform
     verify: verify
+    strip: strip
 
 joinQueries = (query) ->
     for key, val of query
