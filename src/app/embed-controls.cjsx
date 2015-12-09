@@ -23,7 +23,7 @@ ServiceMapEmbedControls = React.createClass
                   onChange={@props.onChange} />
                 </RB.Row>
             </RB.Panel>
-            {if (@props.resource != null)
+            {if (@props.resource != null and @props.resource not in ['address', 'unit'])
                 <RB.Panel>
                     <RB.Row>
                     <MultiValueInputPanel
