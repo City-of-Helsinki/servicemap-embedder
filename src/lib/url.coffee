@@ -46,14 +46,16 @@ transform = (url, {language: lang, query: query}) ->
     uri.toString()
 
 strip = (url, parameters) ->
-    if parameters.resource?
-        if parameters.query.bbox?
-            delete parameters.query.bbox
-        uri = URI url
-        query = uri.search true
-        if query.bbox?
-            delete query.bbox
-        uri.search query
+    unless parameters.resource?
+        return url
+
+    if parameters.query.bbox?
+        delete parameters.query.bbox
+    uri = URI url
+    query = uri.search true
+    if query.bbox?
+        delete query.bbox
+    uri.search query
     uri.toString()
 
 IE_FAULTY_URL = /#(.*[\/\?].*)+$/
