@@ -1,5 +1,6 @@
 _ = require 'underscore'
 React = require 'react'
+ReactDOM = require 'react-dom'
 i18n = require 'lib/i18n'
 smurl = require 'lib/url'
 URI = require 'URIjs'
@@ -38,7 +39,8 @@ props =
 
 appInit = (lang) =>
     props.lang = lang
-    React.render React.createElement(Root, props), div
+    rootEl = React.createElement(Root, props)
+    ReactDOM.render rootEl, div
 
 props.appReset = appInit
 

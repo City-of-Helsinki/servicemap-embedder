@@ -1,9 +1,9 @@
-React = require 'react/addons'
+React = require 'react'
+update = require 'react-addons-update'
 RB = require 'react-bootstrap'
 _ = require 'underscore'
 {t: t} = require 'lib/i18n'
 config = require 'lib/config'
-update = React.addons.update
 cx = require 'classnames'
 
 MultiValueInputPanel = require 'app/multivalue-input-panel'
