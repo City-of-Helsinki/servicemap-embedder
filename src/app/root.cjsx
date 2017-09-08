@@ -1,4 +1,5 @@
-React = require 'react/addons'
+React = require 'react'
+update = require 'react-addons-update'
 RB = require 'react-bootstrap'
 ServiceMapIframe = require 'app/embed-iframe'
 ServiceMapEmbedControls = require 'app/embed-controls'
@@ -12,8 +13,6 @@ i18next = require 'i18next-client'
 cx = require 'classnames'
 
 APP_ROOT = '/'
-
-update = React.addons.update
 
 Root = React.createClass
     changeLanguage: (lng) ->
@@ -113,7 +112,8 @@ Root = React.createClass
             return false
         <div>
 
-          <RB.Navbar inverse brand={t 'page.header'}>
+          <RB.Navbar inverse >
+            <RB.NavBrand>{t 'page.header'}</RB.NavBrand>
             <p className="lead"></p>
             {#@renderLanguages @props.lang}
           </RB.Navbar>
