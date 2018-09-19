@@ -10,10 +10,10 @@ explode = (url) ->
         path.shift()
     resource = path[0]
     id = path[1..]
-    language = data.LANGUAGE[uri.subdomain()]
+    language = data.LANGUAGE[uri.subdomain().split('.')[0]]
     query = uri.search true
 
-    unless language
+    unless (language and language.length > 0)
         if uri.hostname() == 'localhost'
             language = 'fi'
         else
@@ -31,7 +31,7 @@ explode = (url) ->
 transform = (url, {language: lang, query: query}) ->
     uri = URI url
     if lang?
-        uri.subdomain data.SUBDOMAIN[lang]
+        uri.subdomain(data.SUBDOMAIN[lang] + '.' + data.SUBDOMAINS_REST)
     if query?
         delete query.ratio
         unless query.bbox?
@@ -73,6 +73,16 @@ verify = (url) ->
         pathname = uri.pathname() + fragmentUri.toString()
         uri.fragment ''
            .pathname pathname
+
+    # This is run at init time. We need to save the domain suffix
+    # (excluding the language part)
+    subdomain = uri.subdomain()
+    domain = uri.domain()
+    subdomainParts = subdomain.split '.'
+    languagePart = subdomainParts.shift()
+    data.SUBDOMAINS_REST = subdomainParts.join '.'
+    data.DOMAIN = domain
+
     host = uri.hostname()
     query = uri.search true
     if fragmentSearch?
@@ -89,7 +99,8 @@ verify = (url) ->
         return url: uri.toString(), ratio: ratio
     result = false
     _.each data.SUBDOMAIN, (subdomain) =>
-        if host == "#{subdomain}.#{data.DOMAIN}"
+        restSubdomain = data.SUBDOMAINS
+        if host == "#{subdomain}.#{data.SUBDOMAINS_REST}.#{data.DOMAIN}"
             result = uri.toString()
     url: result, ratio: ratio
 

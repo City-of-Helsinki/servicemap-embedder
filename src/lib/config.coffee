@@ -4,7 +4,7 @@ define (require) ->
         fi: 'palvelukartta'
         sv: 'servicekarta'
         en: 'servicemap'
-    DOMAIN: 'hel.fi'
+    DOMAIN: null
     SUBDOMAIN: SUBDOMAIN
     LANGUAGE: _.invert SUBDOMAIN
     LANGUAGES:
