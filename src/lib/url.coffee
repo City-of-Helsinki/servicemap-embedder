@@ -80,7 +80,10 @@ verify = (url) ->
     domain = uri.domain()
     subdomainParts = subdomain.split '.'
     languagePart = subdomainParts.shift()
-    data.SUBDOMAINS_REST = subdomainParts.join '.'
+    if subdomainParts.length == 0
+        data.SUBDOMAINS_REST = null
+    else
+        data.SUBDOMAINS_REST = subdomainParts.join '.'
     data.DOMAIN = domain
 
     host = uri.hostname()
@@ -99,8 +102,10 @@ verify = (url) ->
         return url: uri.toString(), ratio: ratio
     result = false
     _.each data.SUBDOMAIN, (subdomain) =>
-        restSubdomain = data.SUBDOMAINS
-        if host == "#{subdomain}.#{data.SUBDOMAINS_REST}.#{data.DOMAIN}"
+        restSubdomains = ''
+        if data.SUBDOMAINS_REST != null
+            restSubdomains = data.SUBDOMAINS_REST + '.';
+        if host == "#{subdomain}.#{restSubdomains}#{data.DOMAIN}"
             result = uri.toString()
     url: result, ratio: ratio
 
