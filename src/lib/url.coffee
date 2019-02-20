@@ -31,7 +31,10 @@ explode = (url) ->
 transform = (url, {language: lang, query: query}) ->
     uri = URI url
     if lang?
-        uri.subdomain(data.SUBDOMAIN[lang] + '.' + data.SUBDOMAINS_REST)
+        if data.SUBDOMAINS_REST != null
+            uri.subdomain(data.SUBDOMAIN[lang] + '.' + data.SUBDOMAINS_REST)
+        else
+            uri.subdomain(data.SUBDOMAIN[lang])
     if query?
         delete query.ratio
         unless query.bbox?
