@@ -1,9 +1,9 @@
 define (require) ->
     _ = require 'underscore'
     SUBDOMAIN =
-        fi: 'palvelukartta'
-        sv: 'servicekarta'
-        en: 'servicemap'
+        fi: 'palvelukartta-vanha'
+        sv: 'palvelukartta-vanha'
+        en: 'palvelukartta-vanha'
     DOMAIN: null
     SUBDOMAIN: SUBDOMAIN
     LANGUAGE: _.invert SUBDOMAIN
