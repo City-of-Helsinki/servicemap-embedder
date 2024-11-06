@@ -29,7 +29,7 @@
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.9.3",
     "css-loader": "^0.16.0",
-    "file-loader": "^0.8.4",
+    "file-loader": "^0.11.2",
     "glob": "^5.0.14",
     "html-webpack-plugin": "^1.6.0",
     "less": "^2.5.1",
