@@ -34,7 +34,7 @@
     "html-webpack-plugin": "^1.6.0",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
-    "mocha": "2.2.4",
+    "mocha": "2.5.3",
     "mocha-unfunk-reporter": "^0.4.0",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
