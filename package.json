@@ -36,7 +36,7 @@
     "less-loader": "^2.2.0",
     "mocha": "2.2.4",
     "mocha-unfunk-reporter": "^0.4.0",
-    "style-loader": "^0.12.3",
+    "style-loader": "^0.23.1",
     "url-loader": "^0.5.6",
     "webpack": "^1.10.1",
     "webpack-dev-server": "^1.10.1"
